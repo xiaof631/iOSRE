@@ -1,4 +1,705 @@
-<!-- ... 上文内容省略 ... -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS开发者作品集 | 十年经验 · 产品驱动</title>
+    <meta name="description" content="资深iOS开发者，十年经验，累计1500万下载量产品矩阵创造者">
+    <style>
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #5856D6;
+            --text-primary: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F7;
+            --border-color: #D2D2D7;
+            --success-color: #30D158;
+            --gradient: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Highlights */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .highlight-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .highlight-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .highlight-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .highlight-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Projects */
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+            padding: 60px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .project:nth-child(even) {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .project:nth-child(even) .project-info {
+            order: 2;
+        }
+
+        .project:nth-child(even) .project-visual {
+            order: 1;
+        }
+
+        .project-badge {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .project-metrics {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .project-visual {
+            background: var(--gradient);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .visual-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .tech-category {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tech-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tech-item {
+            background: var(--bg-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--bg-secondary);
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+
+            .project {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .project:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+
+            .project:nth-child(even) .project-info,
+            .project:nth-child(even) .project-visual {
+                order: unset;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .project-metrics {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>资深iOS开发者</h1>
+                <p class="hero-subtitle">十年技术沉淀 · 产品驱动增长 · 商业价值创造</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">年开发经验</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1500W+</span>
+                        <span class="stat-label">累计下载量</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">7</span>
+                        <span class="stat-label">上线产品</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#highlights" class="nav-link">核心优势</a></li>
+                <li><a href="#projects" class="nav-link">代表项目</a></li>
+                <li><a href="#tech" class="nav-link">技术栈</a></li>
+                <li><a href="#contact" class="nav-link">联系方式</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Highlights -->
+    <section id="highlights" class="section">
+        <div class="container">
+            <h2 class="section-title">核心竞争优势</h2>
+            <p class="section-subtitle">融合技术深度与商业敏感度，打造具有市场竞争力的产品</p>
+            <div class="highlights">
+                <div class="highlight-card">
+                    <div class="highlight-icon">📱</div>
+                    <h3 class="highlight-title">全栈产品能力</h3>
+                    <p class="highlight-desc">具备从0到1独立构建与运营产品的完整能力，涵盖技术开发、产品设计、运营增长、商业变现等全链路</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🚀</div>
+                    <h3 class="highlight-title">前瞻技术布局</h3>
+                    <p class="highlight-desc">紧跟Apple生态最新动态，首批采用WWDC新API，包括Control Center Widget、FamilyControls等前沿技术</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">💡</div>
+                    <h3 class="highlight-title">商业价值创造</h3>
+                    <p class="highlight-desc">精通IAP内购、广告变现等策略，创新合作分成模式为合作方创造超20万元收益，验证商业模式可行性</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">⚡</div>
+                    <h3 class="highlight-title">快速执行力</h3>
+                    <p class="highlight-desc">具备极强的学习能力和执行效率，能够在一周内完成从开发到上架的完整流程，快速验证产品假设</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">核心项目实战</h2>
+            <p class="section-subtitle">每个项目都是技术创新与商业成功的完美结合</p>
+            <div class="projects">
+                <!-- Project 1 -->
+                <div class="project">
+                    <div class="project-info">
+                        <div class="project-badge">明星产品</div>
+                        <h3 class="project-title">木蛙小组件 & 唯美桌面</h3>
+                        <p class="project-desc">
+                            抓住iOS小组件市场机遇，快速掌握Swift/SwiftUI技术栈，从0到1构建小组件产品矩阵。
+                            通过创新的用户评价引导策略和产品体验优化，成功实现冷启动并建立用户口碑。
+                        </p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">500万+</span>
+                                <span class="metric-label">累计下载</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">4.8</span>
+                                <span class="metric-label">App Store评分</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">4个月</span>
+                                <span class="metric-label">MVP上线</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Swift/SwiftUI</span>
+                            <span class="tag">Widget Extension</span>
+                            <span class="tag">WWDC新API</span>
+                            <span class="tag">用户增长</span>
+                        </div>
+                    </div>
+                    <div class="project-visual">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/18/d0/9d/18d09df9-3a05-82d3-848e-d9743d2725d4/_U63a7_U5236_U4e2d_U5fc3.JPG/497x883bb.jpg" alt="木蛙小组件 Control Center 功能截图" style="max-width: 200px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <h4>首发WWDC最新API</h4>
+                        <p>几乎全部五星好评</p>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project">
+                    <div class="project-info">
+                        <div class="project-badge">技术创新</div>
+                        <h3 class="project-title">AppClock & Control Center Widget</h3>
+                        <p class="project-desc">
+                            深入研究Apple前沿框架，使用FamilyControls开发应用使用限制功能。
+                            成为首批支持iOS 18控制中心小组件的应用，并将核心实现方案开源贡献社区。
+                        </p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">首批</span>
+                                <span class="metric-label">Control Center</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">100+</span>
+                                <span class="metric-label">GitHub Stars</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">开源</span>
+                                <span class="metric-label">技术方案</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">FamilyControls</span>
+                            <span class="tag">Control Center</span>
+                            <span class="tag">iOS 18</span>
+                            <span class="tag">开源贡献</span>
+                        </div>
+                    </div>
+                    <div class="project-visual">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/2b/3e/96/2b3e96fa-d85e-65b3-59bf-ff4b1fdf3828/_U5c0f_U5c3a_U5bf8_1.jpg/497x883bb.jpg" alt="AppCloak 应用锁功能截图" style="max-width: 200px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <h4>前沿技术探索</h4>
+                        <p>技术社区领导力</p>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="project">
+                    <div class="project-info">
+                        <div class="project-badge">商业创新</div>
+                        <h3 class="project-title">壁纸小程序生态</h3>
+                        <p class="project-desc">
+                            探索iOS生态外的商业模式，独立构建壁纸下载产品。
+                            创新性采用与自媒体博主合作分成模式，成功打通推广渠道，实现稳定的商业闭环。
+                        </p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">20万+</span>
+                                <span class="metric-label">合作方收益</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">创新</span>
+                                <span class="metric-label">分成模式</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">稳定</span>
+                                <span class="metric-label">商业闭环</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">小程序开发</span>
+                            <span class="tag">商业模式创新</span>
+                            <span class="tag">渠道合作</span>
+                            <span class="tag">运营增长</span>
+                        </div>
+                    </div>
+                    <div class="project-visual">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/db/39/d9/db39d9a9-778d-6c51-334d-fda5a555420c/2b587b49-30b0-41e4-bb86-44a19b41a62d__U5927_U5c3a_U5bf8_1.jpg/497x883bb.jpg" alt="唯美桌面 小组件展示" style="max-width: 200px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <h4>商业模式验证</h4>
+                        <p>多渠道盈利能力</p>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="project">
+                    <div class="project-info">
+                        <div class="project-badge">快速验证</div>
+                        <h3 class="project-title">唯美指令</h3>
+                        <p class="project-desc">
+                            洞察iOS快捷指令市场需求，展现极致的产品开发效率。
+                            仅用一周时间完成从开发到上架的全流程，通过IAP内购和广告SDK快速验证商业模式。
+                        </p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <span class="metric-value">1周</span>
+                                <span class="metric-label">开发上架</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">IAP</span>
+                                <span class="metric-label">混合变现</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">验证</span>
+                                <span class="metric-label">商业模式</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">快捷指令</span>
+                            <span class="tag">IAP内购</span>
+                            <span class="tag">广告变现</span>
+                            <span class="tag">快速迭代</span>
+                            <span class="tag"><a href="https://apps.apple.com/cn/app/唯美指令-万能指令库/id6446420720" target="_blank" style="color: inherit; text-decoration: none;">App Store</a></span>
+                        </div>
+                    </div>
+                    <div class="project-visual">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/30/7c/1e/307c1e6e-1825-b8f3-03c7-9867f58527e1/_U5927_U5c3a_U5bf8_5.jpg/497x883bb.jpg" alt="唯美指令 App 截图" style="max-width: 200px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <h4>极速开发能力</h4>
+                        <p>一周上架验证</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="section">
+        <div class="container">
+            <h2 class="section-title">技术能力矩阵</h2>
+            <p class="section-subtitle">持续学习，紧跟技术前沿，构建全面的技术能力体系</p>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3>iOS开发</h3>
+                    <div class="tech-list">
+                        <span class="tech-item">Swift/SwiftUI</span>
+                        <span class="tech-item">Objective-C</span>
+                        <span class="tech-item">UIKit</span>
+                        <span class="tech-item">Core Data</span>
+                        <span class="tech-item">Widget Extension</span>
+                        <span class="tech-item">FamilyControls</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>跨端开发</h3>
+                    <div class="tech-list">
+                        <span class="tech-item">uniApp</span>
+                        <span class="tech-item">Vue.js</span>
+                        <span class="tech-item">微信小程序</span>
+                        <span class="tech-item">H5开发</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>商业化技术</h3>
+                    <div class="tech-list">
+                        <span class="tech-item">App Store IAP</span>
+                        <span class="tech-item">广告SDK集成</span>
+                        <span class="tech-item">数据分析</span>
+                        <span class="tech-item">A/B Testing</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>产品运营</h3>
+                    <div class="tech-list">
+                        <span class="tech-item">ASO优化</span>
+                        <span class="tech-item">用户增长</span>
+                        <span class="tech-item">产品设计</span>
+                        <span class="tech-item">项目管理</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="contact">
         <div class="container">
@@ -23,4 +724,44 @@
             </div>
         </div>
     </section>
-<!-- ... 下文内容省略 ... -->
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 监听需要动画的元素
+        document.querySelectorAll('.highlight-card, .project, .tech-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
